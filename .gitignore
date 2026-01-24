@@ -1,5 +1,10 @@
 Vagrantfile
 .vagrant/
-.vagrant/*
-*/.vagrant/*
-**/node_module/**
+
+node_modules/
+.next/
+build/
+
+.env
+*.tsbuildinfo
+next-env.d.ts
