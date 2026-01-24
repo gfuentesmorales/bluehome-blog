@@ -1,0 +1,5 @@
+Vagrantfile
+.vagrant/
+.vagrant/*
+*/.vagrant/*
+**/node_module/**
