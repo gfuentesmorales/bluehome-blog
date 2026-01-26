@@ -12,3 +12,5 @@ package-lock.json
 deploy.sh
 database.db
 **/*.db
+next.config.ts
+uploads/**

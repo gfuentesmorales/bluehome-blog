@@ -1,5 +1,4 @@
 version: "3.9"
-
 services:
   web:
     container_name: nextjs-blog
@@ -7,17 +6,13 @@ services:
       context: ./app
     ports:
       - "4000:3000"
-
     volumes:
-      # Monta el proyecto local
-      - ./app:/app
-      - /app/node_modules
-
-      # Monta la base de datos persistente
+      # Solo montar la DB SQLite
       - ./app/data:/app/data
+      - ./app/public/uploads:/app/public/uploads
     env_file:
       - ./app/.env
     environment:
       NODE_ENV: production
-
     command: npm run start
+
