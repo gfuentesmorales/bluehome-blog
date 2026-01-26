@@ -10,3 +10,5 @@ build/
 next-env.d.ts
 package-lock.json
 deploy.sh
+database.db
+**/*.db
