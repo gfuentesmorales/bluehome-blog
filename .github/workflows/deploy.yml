@@ -1,23 +1,26 @@
-name: Deploy Producción Blue Home Blog
+name: Deploy on Master
 
 on:
   push:
-    branches:
-      - master   
+    branches: [ master ]
+  workflow_dispatch:
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Deploy cambios
-        uses: appleboy/ssh-action@v1.0.3
+      - uses: actions/checkout@v4
+
+      - name: Deploy to Server
+        uses: appleboy/ssh-action@v1.1.0
         with:
           host: ${{ secrets.SFTP_HOST }}
           username: ${{ secrets.SFTP_USER }}
           password: ${{ secrets.SFTP_PASS }}
-          port: 22
+          port: 2022
           script: |
             cd /var/www/mercurio/
             chmod +x ./deploy.sh
             ./deploy.sh
+
