@@ -5,6 +5,10 @@ on:
     branches: [ master ]
   workflow_dispatch:
 
+concurrency:
+  group: deploy-master
+  cancel-in-progress: true
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -23,4 +27,3 @@ jobs:
             cd /var/www/mercurio/
             chmod +x ./deploy.sh
             ./deploy.sh
-
