@@ -8,9 +8,11 @@ build/
 .env
 *.tsbuildinfo
 next-env.d.ts
+next.config.ts
 package-lock.json
 deploy.sh
 database.db
 **/*.db
+**/uploads/
 next.config.ts
-uploads/**
+
