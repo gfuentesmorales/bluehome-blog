@@ -13,8 +13,14 @@ export default async function Page() {
       title: formData.get("title"),
       slug: formData.get("slug"),
       subTitle: formData.get("subTitle"),
-      categoryId: Number(formData.get("category")),
-      authorId: 1,
+      category: {
+        connect: {
+          id: Number(formData.get("category")),
+        }
+      },
+      author: {
+        connect: { id: 1 }
+      },
       feature: formData.get('feature') ? true : false,
       image: formData.get("image"),
       content: formData.get("content"),

@@ -17,6 +17,8 @@ export interface Post {
     name: string;
   } | null;
   feature?: boolean;
+  metaTitle?: string;
+  metaDescription?: string;
 }
 
 export interface PostsResponse {

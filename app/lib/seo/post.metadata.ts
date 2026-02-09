@@ -15,8 +15,8 @@ export async function getPostMetadata(slug: string): Promise<Metadata> {
     post.excerpt ?? post.content?.replace(/<[^>]*>?/gm, "").slice(0, 160);
 
   return {
-    title: `${post?.metaTitle !== null ? post.metaTitle : title} | Blue Home`,
-    description: `${post?.metaDescription !== null ? post?.metaDescription : description}`,
+    title: `${post?.metaTitle !== null ? post.metaTitle : post?.title} | Blue Home`,
+    description: `${post?.metaDescription !== null ? post?.metaDescription : post?.description}`,
     openGraph: {
       title: post.title,   
       description,

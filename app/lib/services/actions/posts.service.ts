@@ -9,7 +9,6 @@ export const createPost = withSession(
     return prisma.post.create({
       data: {
         ...input,
-        authorId: session?.user?.id ?? 1,
       },
     });
   }
@@ -17,7 +16,6 @@ export const createPost = withSession(
 
 export const updatePost = withSession(
   async (session: SessionLike, id: Number, data: unknown) => {
-    console.log('data', data);
     const updated = await prisma.post.update({
       where: { id: Number(id) },
       data,
