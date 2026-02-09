@@ -8,20 +8,23 @@ import Link from '@tiptap/extension-link'
 import TextAlign from '@tiptap/extension-text-align'
 import Image from '@tiptap/extension-image'
 import Placeholder from '@tiptap/extension-placeholder'
+import { Table } from "@tiptap/extension-table"
+import TableRow from "@tiptap/extension-table-row"
+import TableCell from "@tiptap/extension-table-cell"
+import TableHeader from "@tiptap/extension-table-header"
 
-function MenuButton({ onClick, active , children, title } : {
-  onClick: any, active?: boolean, children : any, title : any
+function MenuButton({ onClick, active, children, title }: {
+  onClick: any, active?: boolean, children: any, title: any
 }) {
   return (
     <button
       type="button"
       onClick={onClick}
       title={title}
-      className={`px-3 py-2 rounded-md text-sm font-semibold border transition ${
-        active
-          ? 'bg-blue-600 text-white border-blue-600'
-          : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-100'
-      }`}
+      className={`px-3 py-2 rounded-md text-sm font-semibold border transition ${active
+        ? 'bg-blue-600 text-white border-blue-600'
+        : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-100'
+        }`}
     >
       {children}
     </button>
@@ -34,7 +37,11 @@ export default function Editor({
   placeholder = 'Escribe aquí...',
 }) {
   const [content, setContent] = useState(initialValue || '<p></p>')
+  const [isTableActive, setIsTableActive] = useState(false)
 
+
+
+ 
   const editor = useEditor({
     extensions: [
       StarterKit,
@@ -43,6 +50,12 @@ export default function Editor({
       TextAlign.configure({ types: ['heading', 'paragraph'] }),
       Image,
       Placeholder.configure({ placeholder }),
+      Table.configure({
+        resizable: true,
+      }),
+      TableRow,
+      TableHeader,
+      TableCell,
     ],
     content: initialValue || '<p></p>',
     onUpdate: ({ editor }) => {
@@ -51,19 +64,39 @@ export default function Editor({
     },
     editorProps: {
       attributes: {
-        class: 'prose max-w-full outline-none min-h-[400px] text-lg',
+        class: 'editor-content max-w-full outline-none min-h-[400px] text-lg',
       },
     },
     immediatelyRender: false,
   })
 
-  // 🔥 Mantiene sincronización si initialValue cambia
   useEffect(() => {
     if (editor && initialValue !== editor.getHTML()) {
       editor.commands.setContent(initialValue || '<p></p>')
       setContent(initialValue)
     }
   }, [initialValue, editor])
+
+   useEffect(() => {
+    if (!editor) return
+
+    const update = () => {
+      setIsTableActive(
+        editor.isActive('table') ||
+        editor.isActive('tableCell') ||
+        editor.isActive('tableHeader')
+      )
+    }
+
+    editor.on('selectionUpdate', update)
+    editor.on('transaction', update)
+
+    return () => {
+      editor.off('selectionUpdate', update)
+      editor.off('transaction', update)
+    }
+  }, [editor])
+
 
   const addImage = useCallback(
     (file: File) => {
@@ -143,8 +176,47 @@ export default function Editor({
         <MenuButton onClick={() => editor.chain().focus().setTextAlign('right').run()} title="Alinear derecha">
           R
         </MenuButton>
+        <MenuButton onClick={() => editor.chain().focus().insertTable({ rows: 3, cols: 3, withHeaderRow: true }).run()} title="Tabla">
+          Tabla
+        </MenuButton>
       </div>
-
+      {/* MENÚ CONTEXTUAL DE TABLA */}
+      {isTableActive && (
+        <div className="border-b bg-blue-50 p-2 flex flex-wrap gap-2 text-sm">
+          <button
+            type="button"
+            className="px-2 py-1 border rounded bg-white"
+            onClick={() => editor.chain().focus().toggleHeaderRow().run()}
+          >
+            Cabecera
+          </button>
+          <button onClick={() => editor.chain().focus().addRowAfter().run()} type="button" className="px-2 py-1 border rounded bg-white">
+            + Fila
+          </button>
+          <button onClick={() => editor.chain().focus().addRowBefore().run()} type="button" className="px-2 py-1 border rounded bg-white">
+            ↑ Fila
+          </button>
+          <button onClick={() => editor.chain().focus().deleteRow().run()} type="button" className="px-2 py-1 border rounded bg-white">
+            − Fila
+          </button>
+          <button onClick={() => editor.chain().focus().addColumnAfter().run()} type="button" className="px-2 py-1 border rounded bg-white">
+            + Col
+          </button>
+          <button onClick={() => editor.chain().focus().addColumnBefore().run()} type="button" className="px-2 py-1 border rounded bg-white">
+            ← Col
+          </button>
+          <button onClick={() => editor.chain().focus().deleteColumn().run()} type="button" className="px-2 py-1 border rounded bg-white">
+            − Col
+          </button>
+          <button
+            onClick={() => editor.chain().focus().deleteTable().run()}
+            type="button"
+            className="ml-auto px-2 py-1 border rounded bg-white text-red-600"
+          >
+            🗑 Tabla
+          </button>
+        </div>
+      )}
       {/* CONTENIDO */}
       <div className="p-4 bg-white h-96 overflow-y-auto">
         <EditorContent editor={editor} />

@@ -99,6 +99,28 @@ export default function EditPostClient({ post, categories, action }:
 
               </div>
             </div>
+
+            <div className="border border-gray-200 rounded-lg bg-white shadow-sm p-5">
+              <div className="text">
+                <label className="text-sm font-medium">Meta Titulo</label>
+                <input
+                  name="metaTitle"
+                  defaultValue={post.metaTitle}
+                  className={baseInput}
+                />
+                <small className="text-gray-500">Máximo 100 caracteres, esto ayudara al posicionamiento de tus entradas.</small>
+              </div>
+                <div className="text">
+                <label className="text-sm font-medium">Meta Descripción</label>
+                <textarea
+                  name="metaDescription"
+                  className={baseInput}
+                  defaultValue={post.metaDescription}
+                  rows={5}
+                ></textarea>
+                <small className="text-gray-500">Utiliza una descripción adecuada para mostrar en los buscadores.</small>
+              </div>
+            </div>
           </div>
 
           {/* Columna derecha */}

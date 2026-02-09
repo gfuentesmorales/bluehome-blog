@@ -11,7 +11,7 @@ export default async function PostContent({ post }: { post: Post }) {
 
         <div className="relative w-full aspect-[3/2]">
           <ImageSafe
-            src={post?.image ?? "" }
+            src={post?.image ?? ""}
             alt={post.title ?? ""}
             fill
             className="object-cover rounded-md"
@@ -25,7 +25,26 @@ export default async function PostContent({ post }: { post: Post }) {
         dangerouslySetInnerHTML={{
           __html: post.content,
         }}
-        className="max-w-none text-text-light dark:text-text-dark text-lg leading-relaxed space-y-6 text-balance"
+         className="
+            max-w-none text-lg leading-relaxed space-y-6 text-balance
+
+            [&_h2]:text-2xl [&_h2]:font-bold [&_h2]:mt-6
+            [&_h3]:text-xl [&_h3]:font-semibold [&_h3]:mt-4
+
+            [&_ul]:list-disc [&_ul]:ml-6
+            [&_ol]:list-decimal [&_ol]:ml-6
+            [&_li]:list-item
+
+            [&_table]:border-collapse
+            [&_table]:w-full
+            [&_table]:my-6
+
+            [&_th]:border [&_td]:border
+            [&_th]:border-gray-300 [&_td]:border-gray-300
+            [&_th]:bg-gray-100
+            [&_th]:px-3 [&_th]:py-2
+            [&_td]:px-3 [&_td]:py-2
+          "
       />
 
 

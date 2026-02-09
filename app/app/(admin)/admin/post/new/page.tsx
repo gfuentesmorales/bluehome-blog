@@ -18,6 +18,8 @@ export default async function Page() {
       feature: formData.get('feature') ? true : false,
       image: formData.get("image"),
       content: formData.get("content"),
+      metaTitle: formData.get("metaTitle"),
+      metaDescription: formData.get("metaDescription"),
     };
 
     return await createPost(payload);

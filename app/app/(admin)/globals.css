@@ -3,6 +3,11 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --gray-1: #3d25140d; /* rgba(61, 37, 20, 0.05) */
+  --gray-2: #3d251414; /* rgba(61, 37, 20, 0.08) */
+  --gray-3: #3d25141f; /* rgba(61, 37, 20, 0.12) */
+  --gray-4: #35261c4d; /* rgba(53, 38, 28, 0.30) */
+  --gray-5: #1c191799; /* rgba(28, 25, 23, 0.60) */
 }
 
 :focus-visible {
@@ -37,8 +42,7 @@ select {
 .container--header {
   max-width: 1280px;
   font-size: 14px;
-  font-family:"Work Sans", sans-serif;
-
+  font-family: "Work Sans", sans-serif;
 }
 
 .container--header a {
@@ -64,4 +68,100 @@ select {
 
 .container--header .text-logo img {
   width: 60px;
+}
+
+/* EDITOR */
+
+.editor-content.resize-cursor {
+  cursor: ew-resize;
+  cursor: col-resize;
+}
+
+.editor-content table {
+  border-collapse: collapse;
+  margin: 0;
+  overflow: hidden;
+  table-layout: fixed;
+  width: 100%;
+}
+
+.editor-content table td,
+.editor-content table th {
+  border: 1px solid var(--gray-3);
+  box-sizing: border-box;
+  min-width: 1em;
+  padding: 6px 8px;
+  position: relative;
+  vertical-align: top;
+}
+
+.editor-content table td > *,
+.editor-content table th > * {
+  margin-bottom: 0;
+}
+
+.editor-content table th {
+  background-color: var(--gray-1);
+  font-weight: bold;
+  text-align: left;
+}
+.editor-content .tableWrapper {
+  margin: 1.5rem 0;
+  overflow-x: auto;
+}
+
+.editor-content .selectedCell:after {
+  background: var(--gray-2);  
+  content: "";
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  pointer-events: none;
+  position: absolute;
+  z-index: 2;
+}
+
+.editor-content.resize-cursor .column-resize-handle {
+  bottom: -2px;
+  pointer-events: none;
+  position: absolute;
+  right: -2px;
+  top: 0;
+  width: 4px;
+}
+
+.editor-content.resize-cursor {
+  cursor: ew-resize;
+  cursor: col-resize;
+}
+
+
+.editor-content h1 {
+  font-size: 1.875rem;
+  font-weight: 700;
+}
+
+.editor-content h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.editor-content h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.editor-content ul {
+  list-style: disc;
+  margin-left: 1.5rem;
+}
+
+.editor-content ol {
+  list-style: decimal;
+  margin-left: 1.5rem;
+}
+
+.editor-content li {
+  list-style-position: outside;
 }

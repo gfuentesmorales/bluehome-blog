@@ -12,14 +12,13 @@ export async function getPostMetadata(slug: string): Promise<Metadata> {
   }
 
   const description =
-    post.excerpt ??
-    post.content?.replace(/<[^>]*>?/gm, "").slice(0, 160);
+    post.excerpt ?? post.content?.replace(/<[^>]*>?/gm, "").slice(0, 160);
 
   return {
-    title: `${post.title} | Blue Home`,
-    description,
+    title: `${post?.metaTitle !== null ? post.metaTitle : title} | Blue Home`,
+    description: `${post?.metaDescription !== null ? post?.metaDescription : description}`,
     openGraph: {
-      title: post.title,
+      title: post.title,   
       description,
       type: "article",
       images: post.image
